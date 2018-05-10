@@ -1,21 +1,20 @@
-import java.util.Scanner;
 
 public class Employee {
-	private String id;
+	private String userID;
 	private String name;
 
 	public Employee(String id, String name) {
 		super();
-		this.id = id;
+		this.userID = id;
 		this.name = name;
 	}
 
 	public String getId() {
-		return id;
+		return userID;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.userID = id;
 	}
 
 	public String getName() {
@@ -30,12 +29,4 @@ public class Employee {
 	public String toString() {
 		return name;
 	}
-	
-	public static String getString(Scanner sc, String prompt) {
-		System.out.print(prompt);
-		String s = sc.nextLine(); // read user entry
-		return s;
-	}
-	
-	
 }

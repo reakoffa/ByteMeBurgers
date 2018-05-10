@@ -37,8 +37,10 @@ public class EmployeeMethods {
 		}
 		return employees;
 	}
+	
+	// Search an ArrayList of employees to validate userID.
 
-	// Print out a list of employees.
+	// FIXME: This is an administrator function: Print out a list of employees.
 	public static void printEmployeeList() {
 		ArrayList<Employee> employeeList = readFromFile("CompanyInfo", "Employees");
 		int i = 0;
@@ -48,10 +50,10 @@ public class EmployeeMethods {
 		}
 	}
 
-	// Add employee to list.
-	public static void writeToFile(Employee employee) {
+	// TODO: Add employee to list.
+	public static void writeToFile(Employee employee, String dir, String fileName) {
 
-		Path writeFile = Paths.get("resources/emplist.txt");
+		Path writeFile = Paths.get(dir, fileName);
 		File file = writeFile.toFile();
 
 		try {
