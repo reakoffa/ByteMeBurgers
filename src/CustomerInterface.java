@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CustomerInterface {
@@ -7,19 +6,36 @@ public class CustomerInterface {
 		// object instences created here
 		// ArrayList<FoodItems> cart = new ArrayList<>();
 		Scanner scnr = new Scanner(System.in);
+		
 
 		// all variables initialized here
 		String ans;
 		int num;
 		String item;
-		double total;
+		double total = 0;
+		String newEmp;
+		String idNum;
 
 		System.out.println("Welcome to Byte Me Burgers!");
 		System.out.println();
 		ans = Validator.getString(scnr, "Hit enter to view our menu ");
 		System.out.println();
 		if (ans.equalsIgnoreCase("admin")) {
-			// enter Bens methods for manipulating emp text file
+			ans = Validator.getString(scnr, "Please enter password to access admin privileges: ");
+			System.out.println();
+			if (ans.equalsIgnoreCase("bro@dw@y#")) {
+				System.out.println("Welcome to the management database!");
+				ans = Validator.getString(scnr, "How would you like to modify management permissions? add/delete/exit: ");
+						if (ans.equalsIgnoreCase("add")) {
+							newEmp = Validator.getString(scnr, "Enter name of new manager: ");
+							idNum = Validator.getString(scnr, "Enter ID number for new manager: ");
+							Employee e1 = new Employee(newEmp, idNum);
+							
+							
+							
+						}
+			} else
+				System.out.println("Password invalid. Please try again.");
 		} else if (ans.equalsIgnoreCase("manager")) {
 			// enter Bens code for modifying menu
 		} else {
@@ -38,12 +54,12 @@ public class CustomerInterface {
 
 			System.out.println("Thank you for your order! Here is your receipt:");
 			System.out.println();
-			for (int i = 0; i < cart.length; i++) {
-				System.out.println(cart[i]);
-			}
-			for (int i = 0; i < cart.length; i++) {
-				total += cart[i];
-			}
+//			for (int i = 0; i < cart.length; i++) {
+//				System.out.println(cart[i]);
+//			}
+//			for (int i = 0; i < cart.length; i++) {
+//				total += cart[i];
+//			}
 			System.out.println();
 			System.out.println("Your total is $" + total);
 			System.out.println();
