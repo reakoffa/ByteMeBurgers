@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CashPayment extends Payment {
 
@@ -29,8 +30,12 @@ public class CashPayment extends Payment {
 	}
 	
 	// overloaded overridden method from above may not need this...
-	public int getPayment(int amount) {
-		return 0;
+	public static BigDecimal getPayment(double cash, double total) {
+		double change;
+		change = cash - total;
+		BigDecimal b = BigDecimal.valueOf(change);
+		b =  b.setScale(2, RoundingMode.CEILING);
+		return b;
 	}
 
 }
