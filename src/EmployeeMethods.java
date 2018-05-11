@@ -190,7 +190,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.equalsIgnoreCase(employeeToRemove)) {
+				if (!line.endsWith(employeeToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -198,15 +198,15 @@ public class EmployeeMethods {
 			pw.close();
 			br.close();
 
-			// Delete original file.
-			if (!file.delete()) {
-				System.out.println("Could not delete file.");
-			}
-
-			// Rename new file.
-			if (tempFile.renameTo(file)) {
-				System.out.println("Could not rename ");
-			}
+//			// Delete original file.
+//			if (!file.delete()) {
+//				System.out.println("Could not delete file.");
+//			}
+//
+//			// Rename new file.
+//			if (tempFile.renameTo(file)) {
+//				System.out.println("Could not rename ");
+//			}
 
 		} catch (IOException e) {
 			System.out.println("No need to panic but something's not right here.");
