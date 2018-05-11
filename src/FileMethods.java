@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class FileMethods {
 
@@ -71,5 +72,60 @@ public class FileMethods {
 		}
 	
 
+	} //end of method
+
+	public static ArrayList<FoodItem> readFromFile2(String fileName) {
+		Path read = Paths.get(fileName);
+		File file = read.toFile();
+		ArrayList<FoodItem> foodItems = new ArrayList<>();
+
+		FileReader fr;
+		try {
+			fr = new FileReader(file);
+
+			BufferedReader reader = new BufferedReader(fr);
+
+			String line = reader.readLine();
+
+			while (line != null && line.isEmpty()== false) {
+				System.out.println(line);
+				String [] words = line.split("\t");
+				foodItems.add(new FoodItem(words[0],Category.valueOf(words[1]), words[2], Double.parseDouble(words[3])));
+				System.out.println(words[0]);
+				line = reader.readLine();
+			}
+			reader.close();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+	
+		return foodItems;
+	}
+
+	public static void addToFile(String fileName, ArrayList<FoodItem> foodItems) {
+		ArrayList<FoodItem> data = readFromFile2(fileName);
+		data.addAll(foodItems);
+		writeToFile(fileName, data);
+		
+		
+		return;
+	}
+
+	private static void writeToFile(String fileName, ArrayList<FoodItem> data) {
+		Path writeFile = Paths.get(fileName);
+		File file = writeFile.toFile();
+
+		try {
+			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
+			
+			for (FoodItem f: data) {
+			outW.println(f);
+			}
+			outW.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File was not found");
+		}
+		
 	}
 }
