@@ -12,21 +12,23 @@ import java.util.ArrayList;
 public class EmployeeMethods {
 
 	// Read from the employee text file to generate an ArrayList of employees.
-	public static ArrayList<Employee> readFromFile(String dir, String fileName) {
-		Path readFile = Paths.get(dir, fileName);
+	public static ArrayList<Employee> readFromFileToArrayList(String filePath) {
+		ArrayList<Employee> employees = new ArrayList<>();		
+		Path readFile = Paths.get(filePath);
+		
 		File file = readFile.toFile();
-		String[] temp = new String[2];
-		ArrayList<Employee> employees = new ArrayList<>();
 
 		try {
 			FileReader fr = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fr);
 
 			String line = reader.readLine();
+			String[] temp = new String[2];
 
 			while (line != null) {
 				temp = line.split(",");
-				employees.add(new Employee(temp[0], temp[1]));
+				Employee e = new Employee(temp[0], temp[1]);
+				employees.add(e);
 
 				line = reader.readLine();
 			}
@@ -39,13 +41,38 @@ public class EmployeeMethods {
 	}
 	
 	// Search an ArrayList of employees to validate userID.
+	
+	public static void validateUserID(String userInput, ArrayList<Employee> employees) {
+		for (Employee e : employees) {
+			if (e.getName().equalsIgnoreCase(userInput)) {
+				System.out.println("\nOPTIONS\n1 - Add an item to the menu\n2 - Remove an item from the menu");
+			} else {
+				System.out.println("ID not recognized. Please try again.");
+			}
+		}
+	}
+	
+	public static void addItemToMenu(FoodItem foodItem, String filePath) {
 
-	// FIXME: This is an administrator function: Print out a list of employees.
+		Path writeFile = Paths.get(filePath);
+		File file = writeFile.toFile();
+
+		try {
+			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
+			outW.println(employee);
+			outW.close(); // flushes data closes the stream
+
+		} catch (FileNotFoundException e) {
+			System.out.println("The file was not found here...");
+		}
+	}
+
+	// ADMINISTRATOR FUNCTION: Print out a list of employees.
 	public static void printEmployeeList() {
-		ArrayList<Employee> employeeList = readFromFile("CompanyInfo", "Employees");
+		ArrayList<Employee> employees = readFromFileToArrayList("resources/countries.txt");
 		int i = 0;
 
-		for (Employee e : employeeList) {
+		for (Employee e : employees) {
 			System.out.println(++i + ". " + e.getName());
 		}
 	}
