@@ -41,13 +41,41 @@ public class EmployeeMethods {
 		return employees;
 	}
 
+	public static ArrayList<Employee> readFromFileToArrayListForManagers() {
+		ArrayList<Employee> managers = new ArrayList<>();
+		Path readFile = Paths.get("CompanyInfo/Managers");
+
+		File file = readFile.toFile();
+
+		try {
+			FileReader fr = new FileReader(file);
+			BufferedReader reader = new BufferedReader(fr);
+
+			String line = reader.readLine();
+			String[] temp = new String[2];
+
+			while (line != null) {
+				temp = line.split(",");
+				Employee m = new Employee(temp[0], temp[1]);
+				managers.add(m);
+
+				line = reader.readLine();
+			}
+			reader.close();
+
+		} catch (IOException e) {
+			System.out.println("Something went wrong!");
+		}
+		return managers;
+	}
+	
 	// Search an ArrayList of employees to validate userID.
 	// In Main method, first assign String userInput = Validator.getString(scnr,
 	// "Please enter your User ID number: ");
-	public static void validateUserID(String userInput, ArrayList<Employee> employees) {
-		for (Employee e : employees) {
-			if (e.getId().equalsIgnoreCase(userInput)) {
-				System.out.println("Welcome, " + e.getName() + "!");
+	public static void validateUserID(String userInput, ArrayList<Employee> managers) {
+		for (Employee m : managers) {
+			if (m.getId().equalsIgnoreCase(userInput)) {
+				System.out.println("Welcome, " + m.getName() + "!");
 				System.out.println(
 						"\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
 			} else {
@@ -148,7 +176,7 @@ public class EmployeeMethods {
 		}
 	}
 
-//Delete employee.
+	// Delete employee.
 	public static void deleteEmployeeFromFile(String employeeToRemove) {
 		Path removeEmployeeFromList = Paths.get("CompanyInfo/Menu");
 		File file = removeEmployeeFromList.toFile();
@@ -184,4 +212,4 @@ public class EmployeeMethods {
 			System.out.println("No need to panic but something's not right here.");
 		}
 	}
-	}
+}
