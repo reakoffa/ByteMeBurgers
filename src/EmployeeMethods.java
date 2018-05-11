@@ -143,7 +143,7 @@ public class EmployeeMethods {
 		try {
 			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
 			outW.println(employee);
-			outW.close(); // flushes data closes the stream
+			outW.close();
 
 		} catch (FileNotFoundException e) {
 			System.out.println("The file was not found here...");
