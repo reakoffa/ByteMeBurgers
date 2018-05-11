@@ -41,31 +41,78 @@ public class EmployeeMethods {
 	}
 	
 	// Search an ArrayList of employees to validate userID.
-	
+	// In Main method, first assign String userInput = Validator.getString(scnr, "Please enter your User ID number: ");
 	public static void validateUserID(String userInput, ArrayList<Employee> employees) {
 		for (Employee e : employees) {
 			if (e.getName().equalsIgnoreCase(userInput)) {
-				System.out.println("\nOPTIONS\n1 - Add an item to the menu\n2 - Remove an item from the menu");
+				System.out.println("\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
 			} else {
 				System.out.println("ID not recognized. Please try again.");
 			}
 		}
 	}
 	
-	public static void addItemToMenu(FoodItem foodItem, String filePath) {
+	// In main method, first assign userNum = Validator.getInt(scnr, "Please select an option (1, 2, or 3): ", 1, 3);
+		// if (userNum == 1) {
+			//Display current menu.
+		//}
+		// if (userNum == 2) {
+			//  validate string. ask user to enter the name, category, description, and price of the new item (in that order, separated by a comma).
+			//  call method addItemToMenu.
+			// }
+		// if (userNum == 3) {
+			// validate string. ask user to enter the name of the food item to remove (will this be enough to delete the whole line?).
+			// call method deleteFoodItem.
+	public static void addItemToMenu(FoodItem newfoodItem, String filePath) {
 
 		Path writeFile = Paths.get(filePath);
 		File file = writeFile.toFile();
 
 		try {
 			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
-			outW.println(employee);
+			outW.println(newfoodItem);
 			outW.close(); // flushes data closes the stream
 
 		} catch (FileNotFoundException e) {
 			System.out.println("The file was not found here...");
 		}
 	}
+	
+	public static void deleteFoodItem(String itemToRemove, String dir, String originalFileName, String tempFileName) {
+		Path removeItemFromMenu = Paths.get(dir, originalFileName);
+		File file = removeItemFromMenu.toFile();
+		Path writeFile = Paths.get(dir, tempFileName);
+		File tempFile = writeFile.toFile();
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				if (!line.equalsIgnoreCase(itemToRemove)) {
+					pw.println(line);
+				}
+			}
+
+			pw.close();
+			br.close();
+
+			// Delete original file.
+			if (!file.delete()) {
+				System.out.println("Could not delete file.");
+			}
+
+			// Rename new file.
+			if (tempFile.renameTo(file)) {
+				System.out.println("Could not rename ");
+			}
+
+		} catch (IOException e) {
+			System.out.println("No need to panic but something's not right here.");
+		}
+	} 
 
 	// ADMINISTRATOR FUNCTION: Print out a list of employees.
 	public static void printEmployeeList() {
