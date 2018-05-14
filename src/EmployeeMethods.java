@@ -113,8 +113,9 @@ public class EmployeeMethods {
 		File tempFile = writeFile.toFile();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
 
 			String line = null;
 
@@ -130,10 +131,11 @@ public class EmployeeMethods {
 			// Delete original file.
 			if (!file.delete()) {
 				System.out.println("Could not delete file.");
+				return;
 			}
 
 			// Rename new file.
-			if (tempFile.renameTo(file)) {
+			if (!tempFile.renameTo(file)) {
 				System.out.println("Could not rename ");
 			}
 
@@ -176,8 +178,9 @@ public class EmployeeMethods {
 		File tempFile = writeFile.toFile();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
 
 			String line = null;
 
@@ -190,15 +193,16 @@ public class EmployeeMethods {
 			pw.close();
 			br.close();
 
-			 // Delete original file.
-			 if (!file.delete()) {
-			 System.out.println("Could not delete file.");
-			 }
-			
-			 // Rename new file.
-			 if (tempFile.renameTo(file)) {
-			 System.out.println("Could not rename ");
-			 }
+			// Delete original file.
+			if (!file.delete()) {
+				System.out.println("Could not delete file.");
+				return;
+			}
+
+			// Rename new file.
+			if (!tempFile.renameTo(file)) {
+				System.out.println("Could not rename file.");
+			}
 
 		} catch (IOException e) {
 			System.out.println("No need to panic but something's not right here.");
