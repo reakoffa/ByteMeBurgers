@@ -30,7 +30,7 @@ public class CashPayment extends Payment {
 
 	}
 
-	public void getPayment(double total) {
+	public static void getPayment(double total) {
 
 		// accepting cash payment
 		// calculating tax and change
@@ -65,7 +65,7 @@ public class CashPayment extends Payment {
 
 		DecimalFormat format = new DecimalFormat("###.00");
 		String numberAsString = format.format(change);
-		System.out.println(numberAsString);
+		System.out.println("Your change is $" + numberAsString);
 
 	}
 

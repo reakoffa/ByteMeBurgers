@@ -42,6 +42,34 @@ public class EmployeeMethods {
 		return employees;
 	}
 
+	public static ArrayList<FoodItem> readFromFileToArrayListFoodItems() {
+		ArrayList<FoodItem> shoppingCart = new ArrayList<>();
+		Path readFile = Paths.get("CompanyInfo/Menu");
+
+		File file = readFile.toFile();
+
+		try {
+			FileReader fr = new FileReader(file);
+			BufferedReader reader = new BufferedReader(fr);
+
+			String line = reader.readLine();
+			String[] temp = new String[4];
+
+			while (line != null) {
+				temp = line.split(",");
+				FoodItem f = new FoodItem(temp[0], temp[1], temp[2], 0);
+				shoppingCart.add(f);
+
+				line = reader.readLine();
+			}
+			reader.close();
+
+		} catch (IOException e) {
+			System.out.println("Something went wrong!");
+		}
+		return shoppingCart;
+	}
+
 	// Search an ArrayList of employees to validate userID.
 	// In Main method, first assign String userInput = Validator.getString(scnr,
 	// "Please enter your User ID number: ");
@@ -150,6 +178,17 @@ public class EmployeeMethods {
 			System.out.println(++i + ". " + e.getName());
 		}
 	}
+		
+	//Print out a list of food items.
+	public static void printFoodItems() {
+		ArrayList<FoodItem> foodItems = new ArrayList<>();
+		foodItems = readFromFileToArrayListFoodItems();
+		
+		for (FoodItem f : foodItems) {
+			System.out.println(f.getName());
+		}
+	}
+	
 
 	// Add employee to list.
 	public static void writeToFile(Employee employee) {
@@ -205,4 +244,5 @@ public class EmployeeMethods {
 			System.out.println("No need to panic but something's not right here.");
 		}
 	}
+
 }

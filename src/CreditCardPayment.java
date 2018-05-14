@@ -103,7 +103,6 @@ public class CreditCardPayment extends Payment {
 
 		String cvv = Validator.getString(scan, "Please enter the CVV number found on the back of the card: ");
 		test.setCvv(scan, cvv);
-
 	}
 
 }

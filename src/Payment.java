@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public abstract class Payment {
@@ -20,21 +21,11 @@ public abstract class Payment {
 		this.amount = amount;
 	}
 
-	public double calcPayment(ArrayList<FoodItem> items) {
-
-		double total = 0;
-
-		// adding items to cart
-		for (FoodItem i : items) {
-			total += i.getPrice();
-
-		}
-
-		// calculating total
-		double tax = total * .06;
-		total = total + tax;
-
-		return total;
+	public static String calcPayment(double total) {
+		DecimalFormat format = new DecimalFormat("###.00");
+		String numberAsString = format.format(total);
+		return numberAsString;
+		
 	}
 
 	public abstract void getPayment();
