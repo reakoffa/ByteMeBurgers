@@ -67,11 +67,8 @@ public class EmployeeMethods {
 			hs.add(e.getId());
 		}
 		if (hs.contains(userInput)) {
-			System.out.println(
-					"\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
 			return true;
 		} else {
-			System.out.println("ID not recognized. Please try again.");
 			return false;
 		}
 	}
