@@ -8,14 +8,15 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class EmployeeMethods {
 
 	// Read from the managers text file to generate an ArrayList of managers (who
 	// will have permission to add/delete menu items and to add/delete employees).
-	public static ArrayList<Employee> readFromFileToArrayList(String filePath) {
+	public static ArrayList<Employee> readFromFileToArrayList() {
 		ArrayList<Employee> employees = new ArrayList<>();
-		Path readFile = Paths.get(filePath);
+		Path readFile = Paths.get("CompanyInfo/Employees");
 
 		File file = readFile.toFile();
 
@@ -56,6 +57,22 @@ public class EmployeeMethods {
 		}
 	}
 
+	// Boolean value above is in the if condition
+	// (m.getId().equalsIgnoreCase(userInput)). If that condition is true, the ID is
+	// validated. Below is a method that accomplishes the same thing, but returns a
+	// Boolean value.
+	public static boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
+		HashSet<String> hs = new HashSet<String>();
+		for (Employee e : employees) {
+			hs.add(e.getId());
+		}
+		if (hs.contains(userInput)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// In main method, first assign userNum = Validator.getInt(scnr, "Please select
 	// an option (1, 2, or 3): ", 1, 3);
 	// if (userNum == 1) {
@@ -70,9 +87,9 @@ public class EmployeeMethods {
 	// validate string. ask user to enter the name of the food item to remove (will
 	// this be enough to delete the whole line?).
 	// call method deleteFoodItem.
-	public static void addItemToMenu(FoodItem newfoodItem, String filePath) {
+	public static void addItemToMenu(FoodItem newfoodItem) {
 
-		Path writeFile = Paths.get(filePath);
+		Path writeFile = Paths.get("CompanyInfo/Menu");
 		File file = writeFile.toFile();
 
 		try {
@@ -85,23 +102,22 @@ public class EmployeeMethods {
 		}
 	}
 
-	// Delete food item or delete employee.
-	// This method should work for deleting food items from a menu file and for
-	// deleting employees from a list.
-	public static void deleteFromFile(String itemToRemove, String dir, String originalFileName, String tempFileName) {
-		Path removeItemFromList = Paths.get(dir, originalFileName);
+	// Delete food item.
+	public static void deleteItemFromMenu(String itemToRemove) {
+		Path removeItemFromList = Paths.get("CompanyInfo/Menu");
 		File file = removeItemFromList.toFile();
-		Path writeFile = Paths.get(dir, tempFileName);
+		Path writeFile = Paths.get("CompanyInfo/TempMenu");
 		File tempFile = writeFile.toFile();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
 
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.equalsIgnoreCase(itemToRemove)) {
+				if (!line.startsWith(itemToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -112,10 +128,11 @@ public class EmployeeMethods {
 			// Delete original file.
 			if (!file.delete()) {
 				System.out.println("Could not delete file.");
+				return;
 			}
 
 			// Rename new file.
-			if (tempFile.renameTo(file)) {
+			if (!tempFile.renameTo(file)) {
 				System.out.println("Could not rename ");
 			}
 
@@ -126,7 +143,7 @@ public class EmployeeMethods {
 
 	// Print out a list of employees.
 	public static void printEmployeeList() {
-		ArrayList<Employee> employees = readFromFileToArrayList("resources/countries.txt");
+		ArrayList<Employee> employees = readFromFileToArrayList();
 		int i = 0;
 
 		for (Employee e : employees) {
@@ -135,18 +152,57 @@ public class EmployeeMethods {
 	}
 
 	// Add employee to list.
-	public static void writeToFile(Employee employee, String filePath) {
+	public static void writeToFile(Employee employee) {
 
-		Path writeFile = Paths.get(filePath);
+		Path writeFile = Paths.get("CompanyInfo/Employees");
 		File file = writeFile.toFile();
 
 		try {
 			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
 			outW.println(employee);
-			outW.close(); // flushes data closes the stream
+			outW.close();
 
 		} catch (FileNotFoundException e) {
 			System.out.println("The file was not found here...");
+		}
+	}
+
+	// Delete employee.
+	public static void deleteEmployeeFromFile(String employeeToRemove) {
+		Path removeEmployeeFromList = Paths.get("CompanyInfo/Employees");
+		File file = removeEmployeeFromList.toFile();
+		Path writeFile = Paths.get("CompanyInfo/TempEmployees");
+		File tempFile = writeFile.toFile();
+
+		try {
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				if (!line.endsWith(employeeToRemove)) {
+					pw.println(line);
+				}
+			}
+
+			pw.close();
+			br.close();
+
+			// Delete original file.
+			if (!file.delete()) {
+				System.out.println("Could not delete file.");
+				return;
+			}
+
+			// Rename new file.
+			if (!tempFile.renameTo(file)) {
+				System.out.println("Could not rename file.");
+			}
+
+		} catch (IOException e) {
+			System.out.println("No need to panic but something's not right here.");
 		}
 	}
 }
