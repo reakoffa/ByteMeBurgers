@@ -42,7 +42,7 @@ public class EmployeeMethods {
 		return employees;
 	}
 
-	public static ArrayList<FoodItem> readFromFileToShoppingCart() {
+	public static ArrayList<FoodItem> readFromFileToArrayListFoodItems() {
 		ArrayList<FoodItem> shoppingCart = new ArrayList<>();
 		Path readFile = Paths.get("CompanyInfo/Menu");
 
@@ -182,12 +182,13 @@ public class EmployeeMethods {
 	//Print out a list of food items.
 	public static void printFoodItems() {
 		ArrayList<FoodItem> foodItems = new ArrayList<>();
-		foodItems = FileMethods.readFromFile2("CompanyInfo/Menu");
+		foodItems = readFromFileToArrayListFoodItems();
 		
 		for (FoodItem f : foodItems) {
-			System.out.println(f.getName() + f.getPrice());
+			System.out.println(f.getName());
 		}
 	}
+	
 
 	// Add employee to list.
 	public static void writeToFile(Employee employee) {
