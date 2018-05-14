@@ -178,12 +178,7 @@ public class EmployeeMethods {
 			System.out.println(++i + ". " + e.getName());
 		}
 	}
-	
-public static void main(String[] args) {
-	EmployeeMethods.printEmployeeList();
-
-}
-	
+		
 	//Print out a list of food items.
 	public static void printFoodItems() {
 		ArrayList<FoodItem> foodItems = new ArrayList<>();
