@@ -61,7 +61,7 @@ public class EmployeeMethods {
 	// (m.getId().equalsIgnoreCase(userInput)). If that condition is true, the ID is
 	// validated. Below is a method that accomplishes the same thing, but returns a
 	// Boolean value.
-	public boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
+	public static boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
 		HashSet<String> hs = new HashSet<String>();
 		for (Employee e : employees) {
 			hs.add(e.getId());
@@ -185,7 +185,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.startsWith(employeeToRemove)) {
+				if (!line.endsWith(employeeToRemove)) {
 					pw.println(line);
 				}
 			}
