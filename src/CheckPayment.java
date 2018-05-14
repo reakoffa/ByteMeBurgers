@@ -1,4 +1,4 @@
-import java.math.BigDecimal;
+import java.util.Scanner;
 
 public class CheckPayment extends Payment {
 
@@ -8,7 +8,7 @@ public class CheckPayment extends Payment {
 
 	}
 
-	public CheckPayment(BigDecimal amount) {
+	public CheckPayment(double amount) {
 		super(amount);
 
 	}
@@ -23,8 +23,21 @@ public class CheckPayment extends Payment {
 
 	@Override
 	public void getPayment() {
-		// TODO Auto-generated method stub
-		
+		Scanner scan = new Scanner(System.in);
+		boolean isValid = false;
+		System.out.println("Please enter the 9-digit check Number: ");
+		checkNumber = scan.nextLine();
+
+		while (isValid == false) {
+			if (checkNumber.matches("\\d{9}")) {
+				// this.checkNumber = checkNumber;
+				isValid = true;
+			} else {
+				System.out.println(checkNumber + " is not a valid check number.");
+				checkNumber = Validator.getString(scan, "Please enter a valid check number: ");
+			}
+		}
+
 	}
 
 }

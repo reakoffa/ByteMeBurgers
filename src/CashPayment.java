@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Scanner;
 
 public class CashPayment extends Payment {
 
@@ -10,7 +11,7 @@ public class CashPayment extends Payment {
 
 	}
 
-	public CashPayment(BigDecimal amount) {
+	public CashPayment(double amount) {
 		super(amount);
 
 	}
@@ -21,21 +22,51 @@ public class CashPayment extends Payment {
 
 	public void setAmountTendered(BigDecimal amountTendered) {
 		this.amountTendered = amountTendered;
+
 	}
 
 	@Override
 	public void getPayment() {
-		// TODO Auto-generated method stub
-		
+
 	}
-	
-	// overloaded overridden method from above may not need this...
-	public static BigDecimal getPayment(double cash, double total) {
+
+	public void getPayment(double total) {
+
+		// accepting cash payment
+		// calculating tax and change
+
+		Scanner scan = new Scanner(System.in);
+
+		boolean isValid = false;
+		Double cash;
 		double change;
+		cash = Validator.getDouble(scan, "Please enter cash amount: ");
+		//double tax = total * .06;
+		//total = total + tax;
 		change = cash - total;
-		BigDecimal b = BigDecimal.valueOf(change);
-		b =  b.setScale(2, RoundingMode.CEILING);
-		return b;
+
+		while (isValid == false) {
+
+			String[] splitter = cash.toString().split("\\.");
+			splitter[0].length(); // Before Decimal Count
+			int decimalLength = splitter[1].length();
+
+			if (cash < total) {
+				System.out.println("You have not given enough cash.");
+				cash = Validator.getDouble(scan, "Please enter correct amount of cash: ");
+			} else if (decimalLength > 2) {
+				System.out.println("The amount you entered is not valid.");
+				cash = Validator.getDouble(scan, "Please enter cash amount in correct format (00.00): ");
+			} else {
+				isValid = true;
+
+			}
+		}
+
+		DecimalFormat format = new DecimalFormat("###.00");
+		String numberAsString = format.format(change);
+		System.out.println(numberAsString);
+
 	}
 
 }

@@ -1,47 +1,47 @@
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public abstract class Payment {
 
-	private BigDecimal amount;
+	private double amount;
 
 	public Payment() {
 
 	}
 
-	public Payment(BigDecimal amount) {
+	public Payment(double amount) {
 		this.amount = amount;
 	}
 
-	public BigDecimal getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	public BigDecimal calcPayment(ArrayList<BigDecimal> items) {//change "bigdecimal" to fooditems
-		// calculations go here for calculating subtotal, tax, and grand total
-		BigDecimal sum = new BigDecimal(0.0);
-		for (BigDecimal i : items) {
-			sum = sum.add(i);
-			
+	public double calcPayment(ArrayList<FoodItem> items) {
+
+		double total = 0;
+
+		// adding items to cart
+		for (FoodItem i : items) {
+			total += i.getPrice();
+
 		}
 
-		return sum;
+		// calculating total
+		double tax = total * .06;
+		total = total + tax;
+
+		return total;
 	}
 
 	public abstract void getPayment();
-	
+
 	@Override
 	public String toString() {
 		return "Please pay: $" + amount;
 	}
-
-	// do calcs here
-	// 3 child classes to use calcs
-	// abstract getpmt method - b/c each child class will perform different
-	// operation
 
 }
