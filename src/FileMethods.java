@@ -70,9 +70,8 @@ public class FileMethods {
 		} catch (IOException e) {
 			System.out.println("Something went wrong!");
 		}
-	
 
-	} //end of method
+	} // end of method
 
 	public static ArrayList<FoodItem> readFromFile2(String fileName) {
 		Path read = Paths.get(fileName);
@@ -87,10 +86,10 @@ public class FileMethods {
 
 			String line = reader.readLine();
 
-			while (line != null && line.isEmpty()== false) {
+			while (line != null && line.isEmpty() == false) {
 				System.out.println(line);
-				String [] words = line.split("\t");
-				foodItems.add(new FoodItem(words[0],Category.valueOf(words[1]), words[2], Double.parseDouble(words[3])));
+				String[] words = line.split("\t");
+				foodItems.add(new FoodItem(words[0], words[1], words[2], Double.parseDouble(words[3])));
 				System.out.println(words[0]);
 				line = reader.readLine();
 			}
@@ -98,7 +97,7 @@ public class FileMethods {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-	
+
 		return foodItems;
 	}
 
@@ -106,8 +105,7 @@ public class FileMethods {
 		ArrayList<FoodItem> data = readFromFile2(fileName);
 		data.addAll(foodItems);
 		writeToFile(fileName, data);
-		
-		
+
 		return;
 	}
 
@@ -117,9 +115,9 @@ public class FileMethods {
 
 		try {
 			PrintWriter outW = new PrintWriter(new FileOutputStream(file, true));
-			
-			for (FoodItem f: data) {
-			outW.println(f);
+
+			for (FoodItem f : data) {
+				outW.println(f);
 			}
 			outW.close();
 
@@ -127,5 +125,54 @@ public class FileMethods {
 			System.out.println("File was not found");
 		}
 		
+		
+			
+			
+		}
+		
+		
+		
+
+
+
+	
+		
+		
+		
+		
+	
+	
+	
+	public static void displayMenu(ArrayList<Integer> itemNums, ArrayList<FoodItem> foodItems) {
+		System.out.println("                            Welcome to the Byte Me Burger Menu!");
+		//System.out.printf("%1$-9s %2$-15s %3$-10s %4$-10s %5$-10s", "", "Name","Category","Description","Price");
+		System.out.println("\n=============================================================================================");
+		for(int i = 0; i < foodItems.size(); ++i) {
+			
+			System.out.println((i + 1) + ".  Name:         " + foodItems.get(i).getName());
+			System.out.println("    Category:     " + foodItems.get(i).getCategory());
+			System.out.println("    Description:  " + foodItems.get(i).getDescription());
+			System.out.println("    Price:        " + foodItems.get(i).getPrice());
+			System.out.println();
+			//System.out.printf("\n%1$-10s", itemNums.get(i) + ".");
+			//System.out.print(foodItems.get(i));
+		}
+	}
+	
+	
+	
+	
+	public static ArrayList<FoodItem> addItem(String fileName, FoodItem item) {
+		ArrayList<FoodItem> temp = FileMethods.readFromFile2(fileName);
+		temp.add(item);
+		return temp;
+
+	} // end of 2nd method
+		// void does not return a value (I'm doing something, but not getting anything
+		// back
+
+	public static void addMenu(String fileName, ArrayList<FoodItem> foodItems) {
+		FileMethods.addToFile(fileName, foodItems); // No left side because not returning any value
+		return; // not returning any value
 	}
 }
