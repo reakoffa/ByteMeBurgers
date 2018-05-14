@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class EmployeeMethods {
 
@@ -41,46 +42,37 @@ public class EmployeeMethods {
 		return employees;
 	}
 
-	public static ArrayList<Employee> readFromFileToArrayListForManagers() {
-		ArrayList<Employee> managers = new ArrayList<>();
-		Path readFile = Paths.get("CompanyInfo/Managers");
-
-		File file = readFile.toFile();
-
-		try {
-			FileReader fr = new FileReader(file);
-			BufferedReader reader = new BufferedReader(fr);
-
-			String line = reader.readLine();
-			String[] temp = new String[2];
-
-			while (line != null) {
-				temp = line.split(",");
-				Employee m = new Employee(temp[0], temp[1]);
-				managers.add(m);
-
-				line = reader.readLine();
-			}
-			reader.close();
-
-		} catch (IOException e) {
-			System.out.println("Something went wrong!");
-		}
-		return managers;
-	}
-	
 	// Search an ArrayList of employees to validate userID.
 	// In Main method, first assign String userInput = Validator.getString(scnr,
 	// "Please enter your User ID number: ");
-	public static void validateUserID(String userInput, ArrayList<Employee> managers) {
-		for (Employee m : managers) {
-			if (m.getId().equalsIgnoreCase(userInput)) {
-				System.out.println("Welcome, " + m.getName() + "!");
+	public static void validateUserID(String userInput, ArrayList<Employee> employees) {
+		for (Employee e : employees) {
+			if (e.getId().equalsIgnoreCase(userInput)) {
+				System.out.println("Welcome, " + e.getName() + "!");
 				System.out.println(
 						"\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
 			} else {
 				System.out.println("ID not recognized. Please try again.");
 			}
+		}
+	}
+
+	// Boolean value above is in the if condition
+	// (m.getId().equalsIgnoreCase(userInput)). If that condition is true, the ID is
+	// validated. Below is a method that accomplishes the same thing, but returns a
+	// Boolean value.
+	public boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
+		HashSet<String> hs = new HashSet<String>();
+		for (Employee e : employees) {
+			hs.add(e.getId());
+		}
+		if (hs.contains(userInput)) {
+			System.out.println(
+					"\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
+			return true;
+		} else {
+			System.out.println("ID not recognized. Please try again.");
+			return false;
 		}
 	}
 
@@ -115,9 +107,9 @@ public class EmployeeMethods {
 
 	// Delete food item.
 	public static void deleteItemFromMenu(String itemToRemove) {
-		Path removeItemFromList = Paths.get("CompanyInfo/Employees");
+		Path removeItemFromList = Paths.get("CompanyInfo/Menu");
 		File file = removeItemFromList.toFile();
-		Path writeFile = Paths.get("CompanyInfo/TempEmployees");
+		Path writeFile = Paths.get("CompanyInfo/TempMenu");
 		File tempFile = writeFile.toFile();
 
 		try {
@@ -127,7 +119,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.equalsIgnoreCase(itemToRemove)) {
+				if (!line.startsWith(itemToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -178,9 +170,9 @@ public class EmployeeMethods {
 
 	// Delete employee.
 	public static void deleteEmployeeFromFile(String employeeToRemove) {
-		Path removeEmployeeFromList = Paths.get("CompanyInfo/Menu");
+		Path removeEmployeeFromList = Paths.get("CompanyInfo/Employees");
 		File file = removeEmployeeFromList.toFile();
-		Path writeFile = Paths.get("CompanyInfo/TempMenu");
+		Path writeFile = Paths.get("CompanyInfo/TempEmployees");
 		File tempFile = writeFile.toFile();
 
 		try {
@@ -190,7 +182,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.endsWith(employeeToRemove)) {
+				if (!line.startsWith(employeeToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -198,15 +190,15 @@ public class EmployeeMethods {
 			pw.close();
 			br.close();
 
-//			// Delete original file.
-//			if (!file.delete()) {
-//				System.out.println("Could not delete file.");
-//			}
-//
-//			// Rename new file.
-//			if (tempFile.renameTo(file)) {
-//				System.out.println("Could not rename ");
-//			}
+			 // Delete original file.
+			 if (!file.delete()) {
+			 System.out.println("Could not delete file.");
+			 }
+			
+			 // Rename new file.
+			 if (tempFile.renameTo(file)) {
+			 System.out.println("Could not rename ");
+			 }
 
 		} catch (IOException e) {
 			System.out.println("No need to panic but something's not right here.");
