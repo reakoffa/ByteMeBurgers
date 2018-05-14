@@ -119,7 +119,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.equalsIgnoreCase(itemToRemove)) {
+				if (!line.startsWith(itemToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -182,7 +182,7 @@ public class EmployeeMethods {
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.endsWith(employeeToRemove)) {
+				if (!line.startsWith(employeeToRemove)) {
 					pw.println(line);
 				}
 			}
