@@ -17,6 +17,10 @@ public class CustomerInterface {
 		String idNum;
 		boolean idPass;
 		int passTry = 4;
+		String foodName;
+		Category cat;
+		String description;
+		double price;
 
 		System.out.println("Welcome to Byte Me Burgers!");
 		System.out.println();
@@ -73,7 +77,7 @@ public class CustomerInterface {
 				System.out.println("Password invalid. Exiting program.");
 
 		} else if (ans.equalsIgnoreCase("manager")) {
-			empList = EmployeeMethods.readFromFileToArrayListForManagers();
+			empList = EmployeeMethods.readFromFileToArrayList();
 			do {
 				ans = Validator.getString(scnr, "Please verify ID number: ");
 				idPass = false; // method to verify, needs boolean return
@@ -86,9 +90,12 @@ public class CustomerInterface {
 							do {
 								// list menu via method
 								System.out.println();
-								FoodItem f = new FoodItem();
-								// f = method to create food item, plus user inputs
-								EmployeeMethods.addItemToMenu(f);
+								foodName = Validator.getString(scnr, "What is the name of the new menu item?: ");
+								//cat =
+								//description = Validator.getString(scnr, "Brief description of item: ");
+								//price = Validator.getDouble(scnr, "Price of new item: ", 0, Double.MAX_VALUE);
+//								FoodItem f = new FoodItem();
+//								EmployeeMethods.addItemToMenu(f);
 								System.out.println();
 								System.out.println("Updated menu:");
 								// list menu
@@ -140,12 +147,12 @@ public class CustomerInterface {
 			do {
 				// Mikes method to view menu
 				item = Validator.getString(scnr, "What item would you like to order? ");
-				 num = Validator.getInt(scnr, "How many orders of our " + item + " would you like? ", 1, Integer.MAX_VALUE);
-				 ans = Validator.getString(scnr, "You selected " + num + " " + item + "(s). Add item(s) to cart? y/n ");
-				if (ans.equalsIgnoreCase("y")) {
-					System.out.println(num + " " + item + "(s) added to cart");
-					// enter Mikes code to add item/quantity/price to array list
-				}
+				// num = Validator.getInt(scnr, "How many orders of our " + item + " would you like? ", 1, Integer.MAX_VALUE);
+				// ans = Validator.getString(scnr, "You selected " + num + " " + item + "(s). Add item(s) to cart? y/n ");
+//				if (ans.equalsIgnoreCase("y")) {
+//					System.out.println(num + " " + item + "(s) added to cart");
+//					// enter Mikes code to add item/quantity/price to array list
+//				}
 				ans = Validator.getString(scnr, "Would you like to order anything else? ");
 			} while (ans.equalsIgnoreCase("y"));
 

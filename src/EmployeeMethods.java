@@ -61,17 +61,14 @@ public class EmployeeMethods {
 	// (m.getId().equalsIgnoreCase(userInput)). If that condition is true, the ID is
 	// validated. Below is a method that accomplishes the same thing, but returns a
 	// Boolean value.
-	public boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
+	public static boolean validateUserID2(String userInput, ArrayList<Employee> employees) {
 		HashSet<String> hs = new HashSet<String>();
 		for (Employee e : employees) {
 			hs.add(e.getId());
 		}
 		if (hs.contains(userInput)) {
-			System.out.println(
-					"\nOPTIONS\n1 - View the current menu\n2 - Add an item to the menu\n3 - Remove an item from the menu");
 			return true;
 		} else {
-			System.out.println("ID not recognized. Please try again.");
 			return false;
 		}
 	}
@@ -113,8 +110,9 @@ public class EmployeeMethods {
 		File tempFile = writeFile.toFile();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
 
 			String line = null;
 
@@ -130,10 +128,11 @@ public class EmployeeMethods {
 			// Delete original file.
 			if (!file.delete()) {
 				System.out.println("Could not delete file.");
+				return;
 			}
 
 			// Rename new file.
-			if (tempFile.renameTo(file)) {
+			if (!tempFile.renameTo(file)) {
 				System.out.println("Could not rename ");
 			}
 
@@ -176,13 +175,14 @@ public class EmployeeMethods {
 		File tempFile = writeFile.toFile();
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile, true));
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			PrintWriter pw = new PrintWriter(new FileOutputStream(tempFile));
 
 			String line = null;
 
 			while ((line = br.readLine()) != null) {
-				if (!line.startsWith(employeeToRemove)) {
+				if (!line.endsWith(employeeToRemove)) {
 					pw.println(line);
 				}
 			}
@@ -190,15 +190,16 @@ public class EmployeeMethods {
 			pw.close();
 			br.close();
 
-			 // Delete original file.
-			 if (!file.delete()) {
-			 System.out.println("Could not delete file.");
-			 }
-			
-			 // Rename new file.
-			 if (tempFile.renameTo(file)) {
-			 System.out.println("Could not rename ");
-			 }
+			// Delete original file.
+			if (!file.delete()) {
+				System.out.println("Could not delete file.");
+				return;
+			}
+
+			// Rename new file.
+			if (!tempFile.renameTo(file)) {
+				System.out.println("Could not rename file.");
+			}
 
 		} catch (IOException e) {
 			System.out.println("No need to panic but something's not right here.");
