@@ -56,7 +56,7 @@ public class EmployeeMethods {
 			String[] temp = new String[4];
 
 			while (line != null) {
-				temp = line.split(",");
+				temp = line.split("\t");
 				FoodItem f = new FoodItem(temp[0], temp[1], temp[2], 0);
 				shoppingCart.add(f);
 
@@ -246,3 +246,7 @@ public class EmployeeMethods {
 	}
 
 }
+
+
+
+

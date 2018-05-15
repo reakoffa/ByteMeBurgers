@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,7 +24,6 @@ public class CustomerInterface {
 		String description;
 		double price;
 		double tax;
-		double num1;
 
 		//this allows user to view menu, or if an employee, they can view admin or manager functions here
 		System.out.println("Welcome to Byte Me Burgers!");
@@ -35,7 +33,7 @@ public class CustomerInterface {
 		if (ans.equalsIgnoreCase("admin")) {
 			ans = Validator.getString(scnr, "Please enter password to access admin privileges: ");
 			System.out.println();
-			if (ans.equalsIgnoreCase("aaa")) {
+			if (ans.equalsIgnoreCase("beefaroni")) {
 				System.out.println("Welcome to the management database!");
 				do {
 					ans = Validator.getString(scnr,
@@ -94,9 +92,9 @@ public class CustomerInterface {
 								EmployeeMethods.printFoodItems();
 						
 								System.out.println();
-								foodName = Validator.getString(scnr, "What is the name of the new menu item? (Include item number and comma after): ");
-								cat = Validator.getString(scnr, "New item category (include comma after): ");
-								description = Validator.getString(scnr, "Brief description of item (include comma after): ");
+								foodName = Validator.getString(scnr, "What is the name of the new menu item? (Include item number and tab after): ");
+								cat = Validator.getString(scnr, "New item category (include tab after): ");
+								description = Validator.getString(scnr, "Brief description of item (include tab after): ");
 								price = Validator.getDouble(scnr, "Price of new item (no comma): ", 0, Double.MAX_VALUE);
 								FoodItem f = new FoodItem(foodName, cat, description, price);
 								EmployeeMethods.addItemToMenu(f);
@@ -150,7 +148,8 @@ public class CustomerInterface {
 
 		} else {
 			do {
-				menu = FileMethods.readFromFile2();
+				
+			menu = FileMethods.readFromFile2();
 				FileMethods.displayMenu(menu);
 				item = Validator.getInt(scnr, "Enter number of item would you like to order: ", 1, menu.size());
 				num = Validator.getInt(scnr, "How many orders?: ", 1,
